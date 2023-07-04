@@ -1,9 +1,7 @@
 package com.daofab.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.io.Serializable;
 
@@ -16,7 +14,8 @@ Author : shubham
  * This is a base class by which we can Reduce
  * Code Repition
  */
-@Entity
+@MappedSuperclass
+@DynamicUpdate(value = true)
 public class Daofab {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

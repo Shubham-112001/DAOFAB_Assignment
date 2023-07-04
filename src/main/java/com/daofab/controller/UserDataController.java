@@ -10,12 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +19,7 @@ Author : shubham
 */
 @RestController
 @RequestMapping("/userdata")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserDataController {
     @Autowired
     UserDataService userDataService;
@@ -50,10 +46,9 @@ public class UserDataController {
      * @return A Page object containing the user data for the specified page and size.
      */
     @GetMapping
-    public Page<UserDataResponse> getAllUserData(@RequestParam(value = "size", defaultValue = "2") int size,
+    public List<UserDataResponse> getAllUserData(@RequestParam(value = "size", defaultValue = "2") int size,
             @RequestParam(value = "offset", defaultValue = "0") int offset){
-        Pageable pageable = PageRequest.of(size, offset);
-        List<UserDataResponse> userDataResponsesList = userDataService.getAllUserData(pageable);
-        return new PageImpl<>(userDataResponsesList, pageable,userDataResponsesList.size());
+        Pageable pageable = PageRequest.of(offset, size);
+        return userDataService.getAllUserData(pageable);
     }
 }
